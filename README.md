@@ -1,2 +1,3 @@
 # DarkFunctionParser
-C++ parser for darkFunction sprite editor.
+C++ parser for darkFunction sprite editor (http://darkfunction.com/editor/)
+
