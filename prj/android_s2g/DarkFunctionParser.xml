@@ -6,8 +6,6 @@
 <!-- ATTENTION: If you edit this, beware that all changes will be lost if premake is executed!  -->
 
 
-<!-- Help/Docs/Info: https://docs.gameloft.org/sln2gcc-compile-utility-tool/ -->
-
 <Makefile>
 
 	<OutDir Path="../../.." /> 
