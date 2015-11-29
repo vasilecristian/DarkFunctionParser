@@ -12,9 +12,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		01C6DD3666ACD9A05EC1CB76 /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Commons.h; path = ../../../src/Commons.h; sourceTree = "<group>"; };
 		382288826E79476CBF9206C2 /* Sprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite.cpp; path = ../../../src/Sprite.cpp; sourceTree = "<group>"; };
 		52107EA4BCC7EB4EA2D114E4 /* Animations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Animations.h; path = ../../../include/DarkFunctionParser/Animations.h; sourceTree = "<group>"; };
+		8A63A3F64359592045008A36 /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Commons.h; path = ../../../include/DarkFunctionParser/Commons.h; sourceTree = "<group>"; };
 		9A621E2C553480D63010746C /* Sprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Sprite.h; path = ../../../include/DarkFunctionParser/Sprite.h; sourceTree = "<group>"; };
 		D22D5B18ED77D442D43CC158 /* DarkFunctionParser */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = DarkFunctionParser; path = libDarkFunctionParser_d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6DE46FAD8D24FE4BC08053A /* Animations.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Animations.cpp; path = ../../../src/Animations.cpp; sourceTree = "<group>"; };
@@ -45,6 +45,7 @@
 			isa = PBXGroup;
 			children = (
 				52107EA4BCC7EB4EA2D114E4 /* Animations.h */,
+				8A63A3F64359592045008A36 /* Commons.h */,
 				9A621E2C553480D63010746C /* Sprite.h */,
 			);
 			name = DarkFunctionParser;
@@ -54,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				D6DE46FAD8D24FE4BC08053A /* Animations.cpp */,
-				01C6DD3666ACD9A05EC1CB76 /* Commons.h */,
 				382288826E79476CBF9206C2 /* Sprite.cpp */,
 			);
 			name = src;

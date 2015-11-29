@@ -15,11 +15,11 @@
     <ClInclude Include="..\..\include\DarkFunctionParser\Animations.h">
       <Filter>include\DarkFunctionParser</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\DarkFunctionParser\Sprite.h">
+    <ClInclude Include="..\..\include\DarkFunctionParser\Commons.h">
       <Filter>include\DarkFunctionParser</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Commons.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\include\DarkFunctionParser\Sprite.h">
+      <Filter>include\DarkFunctionParser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

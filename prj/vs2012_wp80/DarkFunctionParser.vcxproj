@@ -169,8 +169,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\DarkFunctionParser\Animations.h" />
+    <ClInclude Include="..\..\include\DarkFunctionParser\Commons.h" />
     <ClInclude Include="..\..\include\DarkFunctionParser\Sprite.h" />
-    <ClInclude Include="..\..\src\Commons.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Animations.cpp" />
