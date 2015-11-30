@@ -19,7 +19,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>/wd4530 /Zc:inline %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/wd4530 /we4715 /we4716 /Zc:inline %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

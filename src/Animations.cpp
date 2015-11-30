@@ -44,9 +44,9 @@ namespace dfp
         return std::make_shared<Anim>(m_anim[animName]);
     }
 
-    PARSE_RESULT Animations::ParseFile(const std::string &fileName)
+    ParseResult Animations::ParseFile(const std::string &fileName)
     {
-        PARSE_RESULT errorsCode = PARSE_RESULT::OK;
+        ParseResult errorsCode = ParseResult::OK;
 
         int lastSlash = fileName.find_last_of("/");
 
@@ -69,7 +69,7 @@ namespace dfp
         // Check if the file could not be opened.
         if (!file)
         {
-            errorsCode = PARSE_RESULT::ERROR_COULDNT_OPEN;
+            errorsCode = ParseResult::ERROR_COULDNT_OPEN;
             return errorsCode;
         }
 
@@ -85,7 +85,7 @@ namespace dfp
         // Check if the file size is valid.
         if (fileSize <= 0)
         {
-            errorsCode = PARSE_RESULT::ERROR_INVALID_FILE_SIZE;
+            errorsCode = ParseResult::ERROR_INVALID_FILE_SIZE;
             return errorsCode;
         }
 
@@ -111,7 +111,7 @@ namespace dfp
         return ParseText(text);
     }
 
-    PARSE_RESULT Animations::ParseText(const std::string &text)
+    ParseResult Animations::ParseText(const std::string &text)
     {
         // Create a tiny xml document and use it to parse the text.
         TiXmlDocument doc;
@@ -121,14 +121,14 @@ namespace dfp
         if (doc.Error())
         {
             m_errorText = doc.ErrorDesc();
-            return PARSE_RESULT::ERROR_PARSING_FAILED;
+            return ParseResult::ERROR_PARSING_FAILED;
         }
 
         TiXmlNode *imgNode = doc.FirstChild("animations");
         if (!imgNode)
         {
             m_errorText = "Cannot find node <animations> !";
-            return PARSE_RESULT::ERROR_MISSING_NODE;
+            return ParseResult::ERROR_MISSING_NODE;
         }
 
         TiXmlElement* imgElem = imgNode->ToElement();
@@ -138,14 +138,14 @@ namespace dfp
         if (m_spriteFileName.empty())
         {
             m_errorText = "Cannot find attribute 'spriteSheet' or the value is empty!";
-            return PARSE_RESULT::ERROR_SPRITE_PATHNAME_WRONG;
+            return ParseResult::ERROR_SPRITE_PATHNAME_WRONG;
         }
 
         m_ver = imgElem->Attribute("ver");
         if (m_ver.empty())
         {
             m_errorText = "Cannot find attribute 'ver' or the value is empty!";
-            return PARSE_RESULT::ERROR_ANIMATIONS_VER_MISSING;
+            return ParseResult::ERROR_ANIMATIONS_VER_MISSING;
         }
 
         const TiXmlNode *node = imgElem->FirstChild();
@@ -153,7 +153,7 @@ namespace dfp
         if (!node)
         {
             m_errorText = "The <spriteSheet> node does not have child nodes!";
-            return PARSE_RESULT::ERROR_SPRITE_PATHNAME_WRONG;
+            return ParseResult::ERROR_SPRITE_PATHNAME_WRONG;
         }
 
         while (node)
@@ -162,8 +162,8 @@ namespace dfp
             {
                 std::shared_ptr<Anim> anim = std::make_shared<Anim>();
 
-                PARSE_RESULT result = anim->ParseXML(node);
-                if (result == PARSE_RESULT::OK)
+                ParseResult result = anim->ParseXML(node);
+                if (result == ParseResult::OK)
                 {
                     m_anim[anim->GetName()] = anim;
                 }
@@ -177,7 +177,7 @@ namespace dfp
             node = node->NextSibling();
         }
 
-        return PARSE_RESULT::OK;
+        return ParseResult::OK;
     }
 
   
@@ -215,7 +215,7 @@ namespace dfp
 
     std::string Anim::GetErrorText(){ return m_errorText; }
 
-    PARSE_RESULT Anim::ParseXML(const TiXmlNode *dataNode)
+    ParseResult Anim::ParseXML(const TiXmlNode *dataNode)
     {
         const TiXmlElement* nodeElm = dataNode->ToElement();
 
@@ -223,13 +223,13 @@ namespace dfp
         if (m_name.empty())
         {
             m_errorText = "Cannot find attribute 'name' or the value is empty!";
-            return PARSE_RESULT::ERROR_NAME_WRONG;
+            return ParseResult::ERROR_NAME_WRONG;
         }
 
         if (!nodeElm->Attribute("loops", (int*)&m_loops))
         {
             m_errorText = "Cannot find attribute 'loops' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         const TiXmlNode *node = dataNode->FirstChild();
@@ -239,8 +239,8 @@ namespace dfp
             {
                 std::shared_ptr<Cell> cell = std::make_shared<Cell>();
 
-                PARSE_RESULT result = cell->ParseXML(node);
-                if (result == PARSE_RESULT::OK)
+                ParseResult result = cell->ParseXML(node);
+                if (result == ParseResult::OK)
                     this->m_cell.push_back(cell);
                 else
                 {
@@ -252,7 +252,7 @@ namespace dfp
             node = node->NextSibling();
         }
 
-        return PARSE_RESULT::OK;
+        return ParseResult::OK;
     }
 
     void Anim::Update(uint64_t timestamp)
@@ -311,20 +311,20 @@ namespace dfp
 
     std::string Cell::GetErrorText(){ return m_errorText; }
 
-    PARSE_RESULT Cell::ParseXML(const TiXmlNode *dataNode)
+    ParseResult Cell::ParseXML(const TiXmlNode *dataNode)
     {
         const TiXmlElement* nodeElm = dataNode->ToElement();
 
         if (!nodeElm->Attribute("index", (int*)&m_index))
         {
             m_errorText = "Cannot find attribute 'index' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         if (!nodeElm->Attribute("delay", (int*)&m_delay))
         {
             m_errorText = "Cannot find attribute 'delay' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         m_delay *= 100;
@@ -336,8 +336,8 @@ namespace dfp
             {
                 std::shared_ptr<CellSpr> cellspr = std::make_shared<CellSpr>();
 
-                PARSE_RESULT result = cellspr->ParseXML(node);
-                if (result == PARSE_RESULT::OK)
+                ParseResult result = cellspr->ParseXML(node);
+                if (result == ParseResult::OK)
                     this->m_cellsSpr.push_back(cellspr);
                 else
                 {
@@ -349,7 +349,7 @@ namespace dfp
             node = node->NextSibling();
         }
 
-        return PARSE_RESULT::OK;
+        return ParseResult::OK;
     }
 
 
@@ -375,7 +375,7 @@ namespace dfp
 
     std::string CellSpr::GetErrorText(){ return m_errorText; }
 
-    PARSE_RESULT CellSpr::ParseXML(const TiXmlNode *dataNode)
+    ParseResult CellSpr::ParseXML(const TiXmlNode *dataNode)
     {
         const TiXmlElement* nodeElm = dataNode->ToElement();
 
@@ -383,28 +383,28 @@ namespace dfp
         if (m_name.empty())
         {
             m_errorText = "Cannot find attribute 'name' or the value is empty!";
-            return PARSE_RESULT::ERROR_NAME_WRONG;
+            return ParseResult::ERROR_NAME_WRONG;
         }
 
         if (!nodeElm->Attribute("x", (int*)&m_x))
         {
             m_errorText = "Cannot find attribute 'x' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         if (!nodeElm->Attribute("y", (int*)&m_y))
         {
             m_errorText = "Cannot find attribute 'y' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         if (!nodeElm->Attribute("z", (int*)&m_z))
         {
             m_errorText = "Cannot find attribute 'z' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
-        return PARSE_RESULT::OK;
+        return ParseResult::OK;
     }
 
 

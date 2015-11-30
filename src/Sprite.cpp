@@ -35,9 +35,9 @@ namespace dfp
 
     std::string Sprite::GetErrorText(){ return m_errorText; }
 
-    PARSE_RESULT Sprite::ParseFile(const std::string &fileName)
+    ParseResult Sprite::ParseFile(const std::string &fileName)
     {
-        PARSE_RESULT errorsCode = PARSE_RESULT::OK;
+        ParseResult errorsCode = ParseResult::OK;
 
         int lastSlash = fileName.find_last_of("/");
 
@@ -60,7 +60,7 @@ namespace dfp
         // Check if the file could not be opened.
         if (!file)
         {
-            errorsCode = PARSE_RESULT::ERROR_COULDNT_OPEN;
+            errorsCode = ParseResult::ERROR_COULDNT_OPEN;
             return errorsCode;
         }
 
@@ -76,7 +76,7 @@ namespace dfp
         // Check if the file size is valid.
         if (fileSize <= 0)
         {
-            errorsCode = PARSE_RESULT::ERROR_INVALID_FILE_SIZE;
+            errorsCode = ParseResult::ERROR_INVALID_FILE_SIZE;
             return errorsCode;
         }
 
@@ -102,7 +102,7 @@ namespace dfp
         return ParseText(text);
     }
 
-    PARSE_RESULT Sprite::ParseText(const std::string &text)
+    ParseResult Sprite::ParseText(const std::string &text)
     {
         // Create a tiny xml document and use it to parse the text.
         TiXmlDocument doc;
@@ -112,14 +112,14 @@ namespace dfp
         if (doc.Error())
         {            
             m_errorText = doc.ErrorDesc();
-            return PARSE_RESULT::ERROR_PARSING_FAILED;
+            return ParseResult::ERROR_PARSING_FAILED;
         }
 
         TiXmlNode *imgNode = doc.FirstChild("img");
         if (!imgNode)
         {
             m_errorText = "Cannot find node <img> !";
-            return PARSE_RESULT::ERROR_MISSING_NODE;
+            return ParseResult::ERROR_MISSING_NODE;
         }
 
         TiXmlElement* imgElem = imgNode->ToElement();
@@ -129,19 +129,19 @@ namespace dfp
         if (m_imageFileName.empty())
         {
             m_errorText = "Cannot find attribute 'name' or the value is empty!";
-            return PARSE_RESULT::ERROR_IMAGE_PATHNAME_WRONG;
+            return ParseResult::ERROR_IMAGE_PATHNAME_WRONG;
         }
 
         if (!imgElem->Attribute("w", (int*)&m_imageW))
         {
             m_errorText = "Cannot find attribute 'w' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         if (!imgElem->Attribute("h", (int*)&m_imageH))
         {
             m_errorText = "Cannot find attribute 'h' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         const TiXmlNode *node = imgElem->FirstChild();
@@ -149,7 +149,7 @@ namespace dfp
         if (!node)
         {
             m_errorText = "The <img> node does not have child nodes!";
-            return PARSE_RESULT::ERROR_IMAGE_PATHNAME_WRONG;
+            return ParseResult::ERROR_IMAGE_PATHNAME_WRONG;
         }
 
         while (node)
@@ -164,14 +164,14 @@ namespace dfp
                     {
                         std::shared_ptr<Dir> dir = std::make_shared<Dir>();
 
-                        PARSE_RESULT result = dir->ParseXML(subnode);
-                        if (result == PARSE_RESULT::OK)
+                        ParseResult result = dir->ParseXML(subnode);
+                        if (result == ParseResult::OK)
                         {
                             m_root = dir;
                             if (m_root->GetName().compare("/") != 0)
                             {
                                 m_errorText = "The root <dir> is missing!";
-                                return PARSE_RESULT::ERROR_ROOT_MISSING;
+                                return ParseResult::ERROR_ROOT_MISSING;
                             }
                         }
                         else
@@ -189,7 +189,7 @@ namespace dfp
             node = node->NextSibling();
         }
 
-        return PARSE_RESULT::OK;
+        return ParseResult::OK;
     }
 
     std::shared_ptr<Spr> Sprite::GetSpr(const std::string& xmlPath)
@@ -228,7 +228,7 @@ namespace dfp
 
     std::string Spr::GetErrorText(){ return m_errorText; }
 
-    PARSE_RESULT Spr::ParseXML(const TiXmlNode *dataNode)
+    ParseResult Spr::ParseXML(const TiXmlNode *dataNode)
     {
         const TiXmlElement* nodeElm = dataNode->ToElement();
 
@@ -236,34 +236,34 @@ namespace dfp
         if (m_name.empty())
         {
             m_errorText = "Cannot find attribute 'name' or the value is empty!";
-            return PARSE_RESULT::ERROR_NAME_WRONG;
+            return ParseResult::ERROR_NAME_WRONG;
         }
 
         if (!nodeElm->Attribute("x", &m_x))
         {
             m_errorText = "Cannot find attribute 'x' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         if(!nodeElm->Attribute("y", &m_y))
         {
             m_errorText = "Cannot find attribute 'y' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         if(!nodeElm->Attribute("w", &m_w))
         {
             m_errorText = "Cannot find attribute 'w' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
         if(!nodeElm->Attribute("h", &m_h))
         {
             m_errorText = "Cannot find attribute 'h' or the value is not numeric!";
-            return PARSE_RESULT::ERROR_NUMERIC_ATTRIBUTE_WRONG;
+            return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
 
-        return PARSE_RESULT::OK;
+        return ParseResult::OK;
     }
 
 
@@ -277,7 +277,7 @@ namespace dfp
 
     std::string Dir::GetErrorText(){ return m_errorText; }
 
-    PARSE_RESULT Dir::ParseXML(const TiXmlNode *dataNode)
+    ParseResult Dir::ParseXML(const TiXmlNode *dataNode)
     {
         const TiXmlElement* nodeElm = dataNode->ToElement();
 
@@ -285,7 +285,7 @@ namespace dfp
         if (m_name.empty())
         {
             m_errorText = "Cannot find attribute 'name' or the value is empty!";
-            return PARSE_RESULT::ERROR_NAME_WRONG;
+            return ParseResult::ERROR_NAME_WRONG;
         }
 
         const TiXmlNode *node = dataNode->FirstChild();
@@ -295,8 +295,8 @@ namespace dfp
             {
                 std::shared_ptr<Dir> dir = std::make_shared<Dir>();
 
-                PARSE_RESULT result = dir->ParseXML(node);
-                if (result == PARSE_RESULT::OK)
+                ParseResult result = dir->ParseXML(node);
+                if (result == ParseResult::OK)
                     this->m_dir[dir->GetName()] = dir;
                 else
                 {
@@ -308,8 +308,8 @@ namespace dfp
             {
                 std::shared_ptr<Spr> spr = std::make_shared<Spr>();
 
-                PARSE_RESULT result = spr->ParseXML(node);
-                if (result == PARSE_RESULT::OK)
+                ParseResult result = spr->ParseXML(node);
+                if (result == ParseResult::OK)
                     this->m_spr[spr->GetName()] = spr;
                 else
                 {
@@ -321,7 +321,7 @@ namespace dfp
             node = node->NextSibling();
         }
 
-        return PARSE_RESULT::OK;
+        return ParseResult::OK;
     }
 
     std::shared_ptr<Spr> Dir::GetSpr(const std::string& xmlPath)

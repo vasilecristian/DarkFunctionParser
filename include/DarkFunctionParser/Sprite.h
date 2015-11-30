@@ -50,13 +50,13 @@ namespace dfp
         /** Read a file and parse it.
         * Note: use '/' instead of '\\' as it is using '/' to find the path.
         * @param fileName is the filename and path of the sprite file (xml format).
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code!*/
-        PARSE_RESULT ParseFile(const std::string &fileName);
+        * @return ParseResult::OK if everithing was fine, or an error code!*/
+        ParseResult ParseFile(const std::string &fileName);
 
         /** Parse text containing sprite formatted XML.
         * @param text is the xml sprite formatted.
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code!*/
-        PARSE_RESULT ParseText(const std::string &text);
+        * @return ParseResult::OK if everithing was fine, or an error code!*/
+        ParseResult ParseText(const std::string &text);
 
         /** This will return a shared pointer to a sprite (Spr) found at location
         * described by the xmlPath. For example if the sprite file is:
@@ -126,8 +126,8 @@ namespace dfp
 
         /** Parse text containing spr XML node.
         * @param dataNode is the xml node for <dir name="brown"> .
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code! */
-        PARSE_RESULT ParseXML(const TiXmlNode *dataNode);
+        * @return ParseResult::OK if everithing was fine, or an error code! */
+        ParseResult ParseXML(const TiXmlNode *dataNode);
 
         /** This will return a shared pointer to a sprite (Spr) found at location
         * described by the xmlPath. For example if the sprite is file is:
@@ -200,8 +200,8 @@ namespace dfp
 
         /** Parse text containing spr XML node.
         * @param dataNode is the xml node for <spr name="0" x="5" y="7" w="17" h="24"/> .
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code! */
-        PARSE_RESULT ParseXML(const TiXmlNode *dataNode);
+        * @return ParseResult::OK if everithing was fine, or an error code! */
+        ParseResult ParseXML(const TiXmlNode *dataNode);
 
         /** Get the text for latest error!
         * @return a string with a text that describe the error.*/

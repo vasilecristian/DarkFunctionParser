@@ -62,13 +62,13 @@ namespace dfp
         /** Read a file and parse it.
         * Note: use '/' instead of '\\' as it is using '/' to find the path.
         * @param fileName is the filename and path of the sprite file (xml format).
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code!*/
-        PARSE_RESULT ParseFile(const std::string &fileName);
+        * @return ParseResult::OK if everithing was fine, or an error code!*/
+        ParseResult ParseFile(const std::string &fileName);
 
         /** Parse text containing sprite formatted XML.
         * @param text is the xml sprite formatted.
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code!*/
-        PARSE_RESULT ParseText(const std::string &text);
+        * @return ParseResult::OK if everithing was fine, or an error code!*/
+        ParseResult ParseText(const std::string &text);
 
     private:
 
@@ -123,8 +123,8 @@ namespace dfp
 
         /** Parse text containing spr XML node.
         * @param dataNode is the xml node for <anim name = "Animation" loops = "0"> .
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code! */
-        PARSE_RESULT ParseXML(const TiXmlNode *dataNode);
+        * @return ParseResult::OK if everithing was fine, or an error code! */
+        ParseResult ParseXML(const TiXmlNode *dataNode);
 
 
         /**
@@ -187,8 +187,8 @@ namespace dfp
 
         /** Parse text containing spr XML node.
         * @param dataNode is the xml node for <cell index = "0" delay = "4"> .
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code! */
-        PARSE_RESULT ParseXML(const TiXmlNode *dataNode);
+        * @return ParseResult::OK if everithing was fine, or an error code! */
+        ParseResult ParseXML(const TiXmlNode *dataNode);
 
         /** Getter for the vector with all cellspr from a cell. 
         * @return a reference to the vector with CellSpr shared pointers. */
@@ -239,8 +239,8 @@ namespace dfp
 
         /** Parse text containing spr XML node.
         * @param dataNode is the xml node for <spr name = "/broun/2" x = "0" y = "0" z = "0" / > .
-        * @return PARSE_RESULT::OK if everithing was fine, or an error code! */
-        PARSE_RESULT ParseXML(const TiXmlNode *dataNode);
+        * @return ParseResult::OK if everithing was fine, or an error code! */
+        ParseResult ParseXML(const TiXmlNode *dataNode);
 
     protected:
 

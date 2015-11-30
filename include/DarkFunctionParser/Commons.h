@@ -2,7 +2,7 @@
 #define DFP_COMMON_H
 namespace dfp
 {
-    enum PARSE_RESULT
+    enum ParseResult
     {
         OK = 0,
         ERROR_COULDNT_OPEN,
