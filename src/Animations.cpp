@@ -367,11 +367,11 @@ namespace dfp
 
     std::string CellSpr::GetName(){ return m_name; }
 
-    std::uint32_t CellSpr::GetX(){ return m_x; }
+    std::int32_t CellSpr::GetX(){ return m_x; }
 
-    std::uint32_t CellSpr::GetY(){ return m_y; }
+    std::int32_t CellSpr::GetY(){ return m_y; }
 
-    std::uint32_t CellSpr::GetZ(){ return m_z; }
+    std::int32_t CellSpr::GetZ(){ return m_z; }
 
     std::string CellSpr::GetErrorText(){ return m_errorText; }
 

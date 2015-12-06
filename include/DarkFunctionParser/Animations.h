@@ -225,13 +225,13 @@ namespace dfp
         std::string GetName();
 
         /** Getter for the sprite x */
-        std::uint32_t GetX();
+        std::int32_t GetX();
 
         /** Getter for the sprite y */
-        std::uint32_t GetY();
+        std::int32_t GetY();
 
         /** Getter for the sprite z */
-        std::uint32_t GetZ();
+        std::int32_t GetZ();
 
         /** Get the text for latest error!
         * @return a string with a text that describe the error.*/
@@ -250,9 +250,9 @@ namespace dfp
         /** Is the name of the <anim> */
         std::string m_name;
 
-        std::uint32_t m_x;
-        std::uint32_t m_y;
-        std::uint32_t m_z;
+        std::int32_t m_x;
+        std::int32_t m_y;
+        std::int32_t m_z;
 
     };
 
