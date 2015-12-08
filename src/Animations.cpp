@@ -16,6 +16,46 @@ namespace dfp
         , m_ver("")
     {}
 
+
+	Animations::Animations(const Animations &obj)
+	{
+		m_errorText = obj.m_errorText;
+		m_animationPath = obj.m_animationPath;
+		m_spriteFileName = obj.m_spriteFileName;
+		m_ver = obj.m_ver;
+
+		for (const auto& anim : obj.m_anim)
+			m_anim[anim.first] = anim.second;
+	}
+
+	Animations::Animations(const std::shared_ptr<Animations> obj)
+	{
+		m_errorText = obj->m_errorText;
+		m_animationPath = obj->m_animationPath;
+		m_spriteFileName = obj->m_spriteFileName;
+		m_ver = obj->m_ver;
+
+		for (const auto& anim : obj->m_anim)
+			m_anim[anim.first] = anim.second;
+	}
+
+	Animations& Animations::operator=(const Animations& obj)
+	{
+		m_errorText = obj.m_errorText;
+		m_animationPath = obj.m_animationPath;
+		m_spriteFileName = obj.m_spriteFileName;
+		m_ver = obj.m_ver;
+
+		m_anim.clear();
+
+		for (const auto& anim : obj.m_anim)
+			m_anim[anim.first] = anim.second;
+
+		return *this;
+	}
+
+
+
     std::string Animations::GetSpriteFileName(bool onlyFileName)
     { 
         if (onlyFileName)
@@ -186,34 +226,64 @@ namespace dfp
 
 
 
-    Anim::Anim() : m_errorText("")
-        , m_name("")
-        , m_loops(0)
-        , m_currentCellIndex(0)
-        , m_timestampLastChange(0)
+    Anim::Anim() :	m_errorText("")
+					, m_name("")
+					, m_loops(0)
+					, m_currentCellIndex(0)
+					, m_timestampLastChange(0)
     {}
 
-    Anim::Anim(const Anim &obj): m_currentCellIndex(0)
-                               , m_timestampLastChange(0)
+    Anim::Anim(const Anim &obj)
     {
         m_errorText = obj.m_errorText;
         m_name = obj.m_name;
         m_loops = obj.m_loops;
-        m_cell = obj.m_cell;
+
+		for (const auto& cell : obj.m_cell)
+			m_cell.push_back(cell);
+
+		m_timestampLastChange = obj.m_timestampLastChange;
+		m_currentCellIndex = obj.m_currentCellIndex;
     }
 
-    Anim::Anim(const std::shared_ptr<Anim> obj) : m_currentCellIndex(0)
-                                                , m_timestampLastChange(0)
+    Anim::Anim(const std::shared_ptr<Anim> obj) 
     {
         m_errorText = obj->m_errorText;
         m_name = obj->m_name;
         m_loops = obj->m_loops;
-        m_cell = obj->m_cell;
+
+		for (const auto& cell : obj->m_cell)
+			m_cell.push_back(cell);
+
+		m_timestampLastChange = obj->m_timestampLastChange;
+		m_currentCellIndex = obj->m_currentCellIndex;
     }
 
-    std::string Anim::GetName(){ return m_name; }
+	Anim& Anim::operator=(const Anim& other)
+	{
+		m_errorText = other.m_errorText;
+		m_name = other.m_name;
+		m_loops = other.m_loops;
 
-    std::string Anim::GetErrorText(){ return m_errorText; }
+		m_cell.clear();
+		for (const auto& cell : other.m_cell)
+			m_cell.push_back(cell);
+
+		m_timestampLastChange = other.m_timestampLastChange;
+		m_currentCellIndex = other.m_currentCellIndex;
+
+		return *this;
+	}
+
+    std::string Anim::GetName()
+	{ 
+		return m_name; 
+	}
+
+    std::string Anim::GetErrorText()
+	{ 
+		return m_errorText; 
+	}
 
     ParseResult Anim::ParseXML(const TiXmlNode *dataNode)
     {

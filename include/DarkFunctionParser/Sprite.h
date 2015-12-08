@@ -16,7 +16,9 @@ namespace dfp
     class Spr;
     class Dir;
 
-    /** This class is designed to read XML files with format like this:
+    /** This class is designed to read XML files generated
+	* by DarkFunction editor (http://darkfunction.com/editor/)
+	* with format like this:
     *------------------------------------------------------------
     * < ? xml version = "1.0" ? >
     * <img name = "n69yj7.bmp" w = "954" h = "1033">
