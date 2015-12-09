@@ -339,7 +339,7 @@ namespace dfp
         if (diff <= 0)
             return;
 
-        int32_t diffLocal = diff;
+        int64_t diffLocal = diff;
 
         size_t maxCells = m_cell.size();
         int32_t delay = m_cell[m_currentCellIndex]->GetDelay();

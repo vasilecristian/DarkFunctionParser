@@ -98,7 +98,7 @@ namespace dfp
         /** The height of the image*/
         std::uint32_t m_imageH;
 
-        /** The object that contains in a tree format all the other notes from xml*/
+        /** The object that contains in a tree format all the other <dir> notes from xml*/
         std::shared_ptr<Dir> m_root;
     };
 
