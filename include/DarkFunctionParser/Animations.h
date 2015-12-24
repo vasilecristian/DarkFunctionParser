@@ -146,8 +146,11 @@ namespace dfp
 
         /**
         * Update.  All the "update logic" must be placed in this function.
-        * @param dtSeconds time diference from last call (in seconds) */
-        void Update(float dtSeconds);
+        * @param dtSeconds time diference from last call (in seconds) 
+		* @param animSpeedFactor is a factor that will accelerate or slow-down the animation.
+		*        Ex: if animSpeedFactor=2.0 the standard delay between animation-frames will be
+		*        delay / 2.0. */
+		void Update(float dtSeconds, float animSpeedFactor);
 
 
         /** Use this to get the current cell, aka the frame of animation. 

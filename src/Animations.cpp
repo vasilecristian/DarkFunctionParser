@@ -325,18 +325,21 @@ namespace dfp
         return ParseResult::OK;
     }
 
-    void Anim::Update(float dtSeconds)
+	void Anim::Update(float dtSeconds, float animSpeedFactor)
     {
 		m_timestampLastChange += dtSeconds;
 
 		if (dtSeconds <= 0)
             return;
 
+		if (animSpeedFactor <= 0)
+			animSpeedFactor = 1.0f;
+
         size_t maxCells = m_cell.size();
 
 		/// GetDelay will return the delay in milliseconds. 
 		/// delay is in seconds.
-        float delay = (float)m_cell[m_currentCellIndex]->GetDelay() / 1000;
+		float delay = (float)m_cell[m_currentCellIndex]->GetDelay() / animSpeedFactor / 1000;
 		if (delay <= 0)
 			delay = 0.001f;
 
@@ -348,7 +351,7 @@ namespace dfp
             if (m_currentCellIndex == maxCells)
                 m_currentCellIndex = 0;
 
-			delay = (float)m_cell[m_currentCellIndex]->GetDelay() / 1000;
+			delay = (float)m_cell[m_currentCellIndex]->GetDelay() / animSpeedFactor / 1000;
 			if (delay <= 0)
 				delay = 0.001f;
         }
@@ -392,8 +395,6 @@ namespace dfp
             m_errorText = "Cannot find attribute 'delay' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
-
-        m_delay *= 100;
 
         const TiXmlNode *node = dataNode->FirstChild();
         while (node)
