@@ -146,8 +146,8 @@ namespace dfp
 
         /**
         * Update.  All the "update logic" must be placed in this function.
-        * @param timestamp is the current time. */
-        void Update(uint64_t timestamp);
+        * @param dtSeconds time diference from last call (in seconds) */
+        void Update(float dtSeconds);
 
 
         /** Use this to get the current cell, aka the frame of animation. 
@@ -174,7 +174,7 @@ namespace dfp
         uint32_t m_currentCellIndex;
 
         /** This is the latest time when the m_currentCellIndex was changed. */
-        uint64_t m_timestampLastChange;
+        float m_timestampLastChange;
     };
 
 

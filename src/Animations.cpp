@@ -325,21 +325,17 @@ namespace dfp
         return ParseResult::OK;
     }
 
-    void Anim::Update(uint64_t timestamp)
+    void Anim::Update(float dtSeconds)
     {
-        if (m_timestampLastChange == 0)
-        {
-            m_timestampLastChange = timestamp;
-            m_currentCellIndex = 0;
-            return;
-        }
 
-        int64_t diff = timestamp - m_timestampLastChange;
+		m_timestampLastChange += dtSeconds;
 
-        if (diff <= 0)
+        int64_t diff = m_timestampLastChange;
+
+		if (dtSeconds <= 0)
             return;
 
-        int64_t diffLocal = diff;
+		int64_t diffLocal = m_timestampLastChange;
 
         size_t maxCells = m_cell.size();
         int32_t delay = m_cell[m_currentCellIndex]->GetDelay();
@@ -354,8 +350,8 @@ namespace dfp
             delay = (int64_t)m_cell[m_currentCellIndex]->GetDelay();
         }
 
-        if (diffLocal != diff)
-            m_timestampLastChange = timestamp;
+        //if (diffLocal != diff)
+        //    m_timestampLastChange = timestamp;
     }
 
     std::shared_ptr<Cell> Anim::GetCurrentCell()
