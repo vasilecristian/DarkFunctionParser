@@ -173,7 +173,7 @@ namespace dfp
         /** This is the current cell that must to be displayed */
         uint32_t m_currentCellIndex;
 
-        /** This is the latest time when the m_currentCellIndex was changed. */
+        /** This is the time elapsed from the last Update call */
         float m_timestampLastChange;
     };
 
