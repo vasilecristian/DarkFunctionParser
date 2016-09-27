@@ -2,12 +2,22 @@
 #define DFP_SPRITE_H
 
 #include <string>
-#include <cstdint>
+//#include <cstdint>
 #include <vector>
 #include <map>
 #include <memory>
 
+#if defined(I3D_PLATFORM_S3E)
+#include "IwDebug.h"
+#include "shared_ptr.hpp"
+namespace mstd = m2dkit;
+#else
+namespace mstd = std;
+#endif
+
 #include "Commons.h"
+
+
 
 class TiXmlNode;
 
@@ -78,7 +88,7 @@ namespace dfp
         *
         * @param xmlPath is the path to the sprite.
         * @return a shared pointer for a Sprite object.*/
-        std::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
+		mstd::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
 
     private:
 
@@ -93,13 +103,13 @@ namespace dfp
         std::string m_imageFileName;
 
         /** The width of the image*/
-        std::uint32_t m_imageW;
+		unsigned int m_imageW;
 
         /** The height of the image*/
-        std::uint32_t m_imageH;
+		unsigned int m_imageH;
 
         /** The object that contains in a tree format all the other <dir> notes from xml*/
-        std::shared_ptr<Dir> m_root;
+        mstd::shared_ptr<Dir> m_root;
     };
 
 
@@ -149,7 +159,7 @@ namespace dfp
         *
         * @param xmlPath is the path to the sprite.
         * @return a shared pointer for a Sprite object.*/
-        std::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
+        mstd::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
 
     protected:
 
@@ -161,11 +171,11 @@ namespace dfp
 
         /** This contains all the childs <dir> nodes. Is a map 
         * of pair (Dir name, Dir instance)*/
-        std::map< std::string, std::shared_ptr<Dir> > m_dir;
+        std::map< std::string, mstd::shared_ptr<Dir> > m_dir;
 
         /** This contains all the childs <spr> nodes  Is a map 
         * of pair (Spr name, Spr instance)*/
-        std::map< std::string, std::shared_ptr<Spr> > m_spr;
+        std::map< std::string, mstd::shared_ptr<Spr> > m_spr;
     };
 
 
@@ -182,23 +192,23 @@ namespace dfp
         * @param w is the width.
         * @param h is the height. */
         Spr(std::string name = "", 
-            std::uint32_t x = 0, std::uint32_t y = 0, 
-            std::uint32_t w = 0, std::uint32_t h = 0);
+			unsigned int x = 0, unsigned int y = 0,
+			unsigned int w = 0, unsigned int h = 0);
 
         /** Getter for the sprite name */
         std::string GetName();
 
         /** Getter for the sprite x */
-        std::uint32_t GetX();
+        unsigned int GetX();
 
         /** Getter for the sprite y */
-        std::uint32_t GetY();
+		unsigned int GetY();
 
         /** Getter for the sprite w */
-        std::uint32_t GetW();
+		unsigned int GetW();
 
         /** Getter for the sprite h */
-        std::uint32_t GetH();
+		unsigned int GetH();
 
         /** Parse text containing spr XML node.
         * @param dataNode is the xml node for <spr name="0" x="5" y="7" w="17" h="24"/> .

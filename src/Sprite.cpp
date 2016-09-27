@@ -1,6 +1,10 @@
 #include "DarkFunctionParser/Sprite.h"
 
+#if defined(I3D_PLATFORM_S3E)
+#include "tinyxml.h"
+#else
 #include <tinyxml/tinyxml.h>
+#endif
 
 
 #include <sstream>
@@ -162,7 +166,7 @@ namespace dfp
                 {
                     if (strcmp(subnode->Value(), "dir") == 0)
                     {
-                        std::shared_ptr<Dir> dir = std::make_shared<Dir>();
+                        mstd::shared_ptr<Dir> dir = mstd::shared_ptr<Dir>(new Dir());
 
                         ParseResult result = dir->ParseXML(subnode);
                         if (result == ParseResult::OK)
@@ -192,18 +196,18 @@ namespace dfp
         return ParseResult::OK;
     }
 
-    std::shared_ptr<Spr> Sprite::GetSpr(const std::string& xmlPath)
+    mstd::shared_ptr<Spr> Sprite::GetSpr(const std::string& xmlPath)
     {
         if (xmlPath.empty())
-            return nullptr;
+            return mstd::shared_ptr<Spr>(NULL);;
 
         if (xmlPath.at(0) != '/')
-            return nullptr;
+            return mstd::shared_ptr<Spr>(NULL);;
 
         if (m_root)
             return m_root->GetSpr(xmlPath.substr(1));
         
-        return nullptr;
+        return mstd::shared_ptr<Spr>(NULL);;
     }
 
 
@@ -211,20 +215,20 @@ namespace dfp
 
 
 
-    Spr::Spr( std::string name, std::uint32_t x, std::uint32_t y, std::uint32_t w, std::uint32_t h) 
+    Spr::Spr( std::string name, unsigned int x, unsigned int y, unsigned int w, unsigned int h) 
         : m_errorText(""), m_name(name)
         , m_x(x), m_y(y), m_w(w), m_h(h)
     {}
 
     std::string Spr::GetName(){ return m_name; }
 
-    std::uint32_t Spr::GetX(){ return m_x; }
+    unsigned int Spr::GetX(){ return m_x; }
 
-    std::uint32_t Spr::GetY(){ return m_y; }
+    unsigned int Spr::GetY(){ return m_y; }
 
-    std::uint32_t Spr::GetW(){ return m_w; }
+    unsigned int Spr::GetW(){ return m_w; }
 
-    std::uint32_t Spr::GetH(){ return m_h; }
+    unsigned int Spr::GetH(){ return m_h; }
 
     std::string Spr::GetErrorText(){ return m_errorText; }
 
@@ -293,7 +297,7 @@ namespace dfp
         {
             if (strcmp(node->Value(), "dir") == 0)
             {
-                std::shared_ptr<Dir> dir = std::make_shared<Dir>();
+                mstd::shared_ptr<Dir> dir = mstd::shared_ptr<Dir>(new Dir());
 
                 ParseResult result = dir->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -306,7 +310,7 @@ namespace dfp
             }
             else if (strcmp(node->Value(), "spr") == 0)
             {
-                std::shared_ptr<Spr> spr = std::make_shared<Spr>();
+                mstd::shared_ptr<Spr> spr = mstd::shared_ptr<Spr>(new Spr());
 
                 ParseResult result = spr->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -324,10 +328,10 @@ namespace dfp
         return ParseResult::OK;
     }
 
-    std::shared_ptr<Spr> Dir::GetSpr(const std::string& xmlPath)
+    mstd::shared_ptr<Spr> Dir::GetSpr(const std::string& xmlPath)
     {
         if (xmlPath.empty())
-            return nullptr;
+            return mstd::shared_ptr<Spr>(NULL);
 
         size_t pos = xmlPath.find("/");
 
@@ -340,16 +344,16 @@ namespace dfp
         std::string dirName = xmlPath.substr(0, pos);
 
         if (dirName.empty())
-            return nullptr;
+            return mstd::shared_ptr<Spr>(NULL);
 
         auto it = m_dir.find(dirName);
 
         if (it == m_dir.end())
-            return nullptr;
+            return mstd::shared_ptr<Spr>(NULL);
 
-        std::shared_ptr<Dir> dir = m_dir[dirName];
+        mstd::shared_ptr<Dir> dir = m_dir[dirName];
         if (!dir)
-            return nullptr;
+            return mstd::shared_ptr<Spr>(NULL);
 
         return dir->GetSpr(xmlPath.substr(pos + 1));
     }

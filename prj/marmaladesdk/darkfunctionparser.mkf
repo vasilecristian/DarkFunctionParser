@@ -1,0 +1,53 @@
+files
+{
+    ["src"]
+	../../src/Animations.cpp
+	../../src/Commons.h
+	../../src/Sprite.cpp
+	../../include/DarkFunctionParser/Animations.h
+	../../include/DarkFunctionParser/Commons.h
+	../../include/DarkFunctionParser/Sprite.h
+}
+
+debug_defines
+{
+	
+    _DEBUG
+    _SCL_SECURE_NO_WARNINGS
+    _CRT_SECURE_NO_WARNINGS
+    _WINSOCK_DEPRECATED_NO_WARNINGS
+}
+
+defines
+{
+	
+    NDEBUG
+    _SECURE_SCL=0
+    _SECURE_SCL_THROWS=0
+    _SCL_SECURE_NO_WARNINGS
+    _CRT_SECURE_NO_WARNINGS
+    _WINSOCK_DEPRECATED_NO_WARNINGS
+}
+
+includepaths
+{
+	
+    ../../include
+    ../../src
+    ../../../tinyxml/include
+}
+
+librarypaths
+{
+	
+}
+
+options
+{
+	
+}
+subprojects
+{
+    iw2dkitcore
+}
+
