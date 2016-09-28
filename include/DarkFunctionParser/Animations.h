@@ -7,13 +7,7 @@
 #include <map>
 #include <memory>
 
-#if defined(I3D_PLATFORM_S3E)
-#include "IwDebug.h"
-#include "shared_ptr.hpp"
-namespace mstd = m2dkit;
-#else
-namespace mstd = std;
-#endif
+
 
 #include "Commons.h"
 
@@ -52,7 +46,7 @@ namespace dfp
         Animations();
 
 		/** The "copy constructor" that takes a shared_ptr as input */
-		Animations(const mstd::shared_ptr<Animations> obj);
+		Animations(const std::shared_ptr<Animations> obj);
 
 		/** The copy constructor */
 		Animations(const Animations &obj);
@@ -77,7 +71,7 @@ namespace dfp
         * fast => So use it only to load the animations, not to draw them.
         * @param animName is the animation name.
         * @return an shared pointer to an Anim, OR a null shared pointer*/
-		mstd::shared_ptr<Anim> GetAnim(const std::string& animName);
+		std::shared_ptr<Anim> GetAnim(const std::string& animName);
 
         /** Read a file and parse it.
         * Note: use '/' instead of '\\' as it is using '/' to find the path.
@@ -107,7 +101,7 @@ namespace dfp
 
         /** This contains all the childs <anim> nodes. Is a map
         * of pair (Anim name, Anim instance)*/
-        std::map< std::string, mstd::shared_ptr<Anim> > m_anim;
+        std::map< std::string, std::shared_ptr<Anim> > m_anim;
 
     };
 
@@ -131,7 +125,7 @@ namespace dfp
         Anim();
 
 		/** The "copy constructor" that takes a shared_ptr as input */
-        Anim(const mstd::shared_ptr<Anim> obj);
+        Anim(const std::shared_ptr<Anim> obj);
 
 		/** The copy constructor */
         Anim(const Anim &obj);
@@ -164,7 +158,7 @@ namespace dfp
         /** Use this to get the current cell, aka the frame of animation. 
         * The return value is changed by the Update function.
         * @return a shared pointerto an Cell instance.*/
-		mstd::shared_ptr<Cell> GetCurrentCell();
+		std::shared_ptr<Cell> GetCurrentCell();
         
 
     protected:
@@ -179,7 +173,7 @@ namespace dfp
         int m_loops;
 
         /** This contains all the childs <cell> nodes.*/
-        std::vector< mstd::shared_ptr<Cell> > m_cell;
+        std::vector< std::shared_ptr<Cell> > m_cell;
 
         /** This is the current cell that must to be displayed */
         uint32_t m_currentCellIndex;
@@ -220,7 +214,7 @@ namespace dfp
 
         /** Getter for the vector with all cellspr from a cell. 
         * @return a reference to the vector with CellSpr shared pointers. */
-        const std::vector< mstd::shared_ptr<CellSpr> >& GetCellsSpr();
+        const std::vector< std::shared_ptr<CellSpr> >& GetCellsSpr();
 
     protected:
 
@@ -234,7 +228,7 @@ namespace dfp
         unsigned int m_delay;
 
         /** This contains all the childs <cell> nodes.*/
-        std::vector< mstd::shared_ptr<CellSpr> > m_cellsSpr;
+        std::vector< std::shared_ptr<CellSpr> > m_cellsSpr;
 
     };
 

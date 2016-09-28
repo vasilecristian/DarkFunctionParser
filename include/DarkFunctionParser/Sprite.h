@@ -7,13 +7,6 @@
 #include <map>
 #include <memory>
 
-#if defined(I3D_PLATFORM_S3E)
-#include "IwDebug.h"
-#include "shared_ptr.hpp"
-namespace mstd = m2dkit;
-#else
-namespace mstd = std;
-#endif
 
 #include "Commons.h"
 
@@ -88,7 +81,7 @@ namespace dfp
         *
         * @param xmlPath is the path to the sprite.
         * @return a shared pointer for a Sprite object.*/
-		mstd::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
+		std::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
 
     private:
 
@@ -109,7 +102,7 @@ namespace dfp
 		unsigned int m_imageH;
 
         /** The object that contains in a tree format all the other <dir> notes from xml*/
-        mstd::shared_ptr<Dir> m_root;
+        std::shared_ptr<Dir> m_root;
     };
 
 
@@ -159,7 +152,7 @@ namespace dfp
         *
         * @param xmlPath is the path to the sprite.
         * @return a shared pointer for a Sprite object.*/
-        mstd::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
+        std::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
 
     protected:
 
@@ -171,11 +164,11 @@ namespace dfp
 
         /** This contains all the childs <dir> nodes. Is a map 
         * of pair (Dir name, Dir instance)*/
-        std::map< std::string, mstd::shared_ptr<Dir> > m_dir;
+        std::map< std::string, std::shared_ptr<Dir> > m_dir;
 
         /** This contains all the childs <spr> nodes  Is a map 
         * of pair (Spr name, Spr instance)*/
-        std::map< std::string, mstd::shared_ptr<Spr> > m_spr;
+        std::map< std::string, std::shared_ptr<Spr> > m_spr;
     };
 
 

@@ -32,7 +32,7 @@ namespace dfp
 			m_anim[anim.first] = anim.second;
 	}
 
-	Animations::Animations(const mstd::shared_ptr<Animations> obj)
+	Animations::Animations(const std::shared_ptr<Animations> obj)
 	{
 		m_errorText = obj->m_errorText;
 		m_animationPath = obj->m_animationPath;
@@ -78,14 +78,14 @@ namespace dfp
 
     std::string Animations::GetErrorText(){ return m_errorText; }
 
-    mstd::shared_ptr<Anim> Animations::GetAnim(const std::string& animName)
+    std::shared_ptr<Anim> Animations::GetAnim(const std::string& animName)
     {
         auto it = m_anim.find(animName);
 
         if (it == m_anim.end())
-            return mstd::shared_ptr<Anim>(NULL);
+            return std::shared_ptr<Anim>(NULL);
 
-        return mstd::shared_ptr<Anim>(new Anim(m_anim[animName]));
+        return std::shared_ptr<Anim>(new Anim(m_anim[animName]));
     }
 
     ParseResult Animations::ParseFile(const std::string &fileName)
@@ -204,7 +204,7 @@ namespace dfp
         {
             if (strcmp(node->Value(), "anim") == 0)
             {
-                mstd::shared_ptr<Anim> anim = mstd::shared_ptr<Anim>(new Anim());
+                std::shared_ptr<Anim> anim = std::shared_ptr<Anim>(new Anim());
 
                 ParseResult result = anim->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -250,7 +250,7 @@ namespace dfp
 		m_currentCellIndex = obj.m_currentCellIndex;
     }
 
-    Anim::Anim(const mstd::shared_ptr<Anim> obj) 
+    Anim::Anim(const std::shared_ptr<Anim> obj) 
     {
         m_errorText = obj->m_errorText;
         m_name = obj->m_name;
@@ -311,7 +311,7 @@ namespace dfp
         {
             if (strcmp(node->Value(), "cell") == 0)
             {
-                mstd::shared_ptr<Cell> cell = mstd::shared_ptr<Cell>(new Cell());
+                std::shared_ptr<Cell> cell = std::shared_ptr<Cell>(new Cell());
 
                 ParseResult result = cell->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -361,10 +361,10 @@ namespace dfp
         }
     }
 
-    mstd::shared_ptr<Cell> Anim::GetCurrentCell()
+    std::shared_ptr<Cell> Anim::GetCurrentCell()
     {
         if (m_cell.empty())
-            return mstd::shared_ptr<Cell>(NULL);
+            return std::shared_ptr<Cell>(NULL);
 
         return m_cell[m_currentCellIndex];
     }
@@ -405,7 +405,7 @@ namespace dfp
         {
             if (strcmp(node->Value(), "spr") == 0)
             {
-                mstd::shared_ptr<CellSpr> cellspr = mstd::shared_ptr<CellSpr>(new CellSpr());
+                std::shared_ptr<CellSpr> cellspr = std::shared_ptr<CellSpr>(new CellSpr());
 
                 ParseResult result = cellspr->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -424,7 +424,7 @@ namespace dfp
     }
 
 
-    const std::vector< mstd::shared_ptr<CellSpr> >& Cell::GetCellsSpr()
+    const std::vector< std::shared_ptr<CellSpr> >& Cell::GetCellsSpr()
     {
         return m_cellsSpr;
     }
