@@ -51,6 +51,8 @@ namespace dfp
 		/** The copy constructor */
 		Animations(const Animations &obj);
 
+		~Animations();
+
 		/** The asignment operator */
 		Animations& operator=(const Animations& obj);
 
@@ -130,6 +132,8 @@ namespace dfp
 		/** The copy constructor */
         Anim(const Anim &obj);
 
+		~Anim();
+
 		/** The asignment operator */
 		Anim& operator=(const Anim& other);
 
@@ -197,6 +201,8 @@ namespace dfp
         /** The constructor */
         Cell();
 
+		~Cell();
+
         /** Getter for the Index */
         unsigned int GetIndex();
 
@@ -242,6 +248,8 @@ namespace dfp
 
         /** The constructor*/
         CellSpr();
+
+		~CellSpr();
 
         /** Getter for the name of the node. */
         std::string GetName();

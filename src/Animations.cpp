@@ -43,6 +43,11 @@ namespace dfp
 			m_anim[anim.first] = anim.second;
 	}
 
+	Animations::~Animations()
+	{
+
+	}
+
 	Animations& Animations::operator=(const Animations& obj)
 	{
 		m_errorText = obj.m_errorText;
@@ -263,6 +268,11 @@ namespace dfp
 		m_currentCellIndex = obj->m_currentCellIndex;
     }
 
+	Anim::~Anim()
+	{
+
+	}
+
 	Anim& Anim::operator=(const Anim& other)
 	{
 		m_errorText = other.m_errorText;
@@ -378,6 +388,11 @@ namespace dfp
     Cell::Cell() : m_errorText(""), m_index(0), m_delay(0)
     {}
 
+	Cell::~Cell()
+	{
+
+	}
+
     unsigned int Cell::GetIndex(){ return m_index; }
 
     unsigned int Cell::GetDelay(){ return m_delay; }
@@ -434,6 +449,11 @@ namespace dfp
 
     CellSpr::CellSpr() : m_errorText(""), m_name(""), m_x(0), m_y(0), m_z(0)
     {}
+
+	CellSpr::~CellSpr()
+	{
+
+	}
 
 
     std::string CellSpr::GetName(){ return m_name; }
