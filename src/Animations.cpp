@@ -88,9 +88,9 @@ namespace dfp
         auto it = m_anim.find(animName);
 
         if (it == m_anim.end())
-            return std::shared_ptr<Anim>(NULL);
+            return nullptr;
 
-        return std::shared_ptr<Anim>(new Anim(m_anim[animName]));
+        return std::make_shared<Anim>(m_anim[animName]);
     }
 
     ParseResult Animations::ParseFile(const std::string &fileName)
@@ -209,7 +209,7 @@ namespace dfp
         {
             if (strcmp(node->Value(), "anim") == 0)
             {
-                std::shared_ptr<Anim> anim = std::shared_ptr<Anim>(new Anim());
+                std::shared_ptr<Anim> anim = std::make_shared<Anim>();
 
                 ParseResult result = anim->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -321,7 +321,7 @@ namespace dfp
         {
             if (strcmp(node->Value(), "cell") == 0)
             {
-                std::shared_ptr<Cell> cell = std::shared_ptr<Cell>(new Cell());
+                std::shared_ptr<Cell> cell = std::make_shared<Cell>();
 
                 ParseResult result = cell->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -374,7 +374,7 @@ namespace dfp
     std::shared_ptr<Cell> Anim::GetCurrentCell()
     {
         if (m_cell.empty())
-            return std::shared_ptr<Cell>(NULL);
+            return nullptr;
 
         return m_cell[m_currentCellIndex];
     }
@@ -420,7 +420,7 @@ namespace dfp
         {
             if (strcmp(node->Value(), "spr") == 0)
             {
-                std::shared_ptr<CellSpr> cellspr = std::shared_ptr<CellSpr>(new CellSpr());
+                std::shared_ptr<CellSpr> cellspr = std::make_shared<CellSpr>();
 
                 ParseResult result = cellspr->ParseXML(node);
                 if (result == ParseResult::OK)

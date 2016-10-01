@@ -166,7 +166,7 @@ namespace dfp
                 {
                     if (strcmp(subnode->Value(), "dir") == 0)
                     {
-                        std::shared_ptr<Dir> dir = std::shared_ptr<Dir>(new Dir());
+                        std::shared_ptr<Dir> dir = std::make_shared<Dir>();
 
                         ParseResult result = dir->ParseXML(subnode);
                         if (result == ParseResult::OK)
@@ -199,15 +199,15 @@ namespace dfp
     std::shared_ptr<Spr> Sprite::GetSpr(const std::string& xmlPath)
     {
         if (xmlPath.empty())
-            return std::shared_ptr<Spr>(NULL);;
+            return nullptr;
 
         if (xmlPath.at(0) != '/')
-            return std::shared_ptr<Spr>(NULL);;
+            return nullptr;
 
         if (m_root)
             return m_root->GetSpr(xmlPath.substr(1));
         
-        return std::shared_ptr<Spr>(NULL);;
+        return nullptr;
     }
 
 
@@ -297,7 +297,7 @@ namespace dfp
         {
             if (strcmp(node->Value(), "dir") == 0)
             {
-                std::shared_ptr<Dir> dir = std::shared_ptr<Dir>(new Dir());
+                std::shared_ptr<Dir> dir = std::make_shared<Dir>();
 
                 ParseResult result = dir->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -310,7 +310,7 @@ namespace dfp
             }
             else if (strcmp(node->Value(), "spr") == 0)
             {
-                std::shared_ptr<Spr> spr = std::shared_ptr<Spr>(new Spr());
+                std::shared_ptr<Spr> spr = std::make_shared<Spr>();
 
                 ParseResult result = spr->ParseXML(node);
                 if (result == ParseResult::OK)
@@ -331,7 +331,7 @@ namespace dfp
     std::shared_ptr<Spr> Dir::GetSpr(const std::string& xmlPath)
     {
         if (xmlPath.empty())
-            return std::shared_ptr<Spr>(NULL);
+            return nullptr;
 
         size_t pos = xmlPath.find("/");
 
@@ -344,16 +344,16 @@ namespace dfp
         std::string dirName = xmlPath.substr(0, pos);
 
         if (dirName.empty())
-            return std::shared_ptr<Spr>(NULL);
+            return nullptr;
 
         auto it = m_dir.find(dirName);
 
         if (it == m_dir.end())
-            return std::shared_ptr<Spr>(NULL);
+            return nullptr;
 
         std::shared_ptr<Dir> dir = m_dir[dirName];
         if (!dir)
-            return std::shared_ptr<Spr>(NULL);
+            return nullptr;
 
         return dir->GetSpr(xmlPath.substr(pos + 1));
     }
