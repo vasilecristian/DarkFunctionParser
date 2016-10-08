@@ -86,6 +86,10 @@ namespace dfp
         * @return ParseResult::OK if everithing was fine, or an error code!*/
         ParseResult ParseText(const std::string &text);
 
+
+		std::map< std::string, std::shared_ptr<Anim> >& GetAnims();
+
+
     private:
 
         /** Is the text for latest error */
@@ -164,6 +168,7 @@ namespace dfp
         * @return a shared pointerto an Cell instance.*/
 		std::shared_ptr<Cell> GetCurrentCell();
         
+		std::vector< std::shared_ptr<Cell> >& GetCells();
 
     protected:
 

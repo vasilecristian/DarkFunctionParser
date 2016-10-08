@@ -229,7 +229,10 @@ namespace dfp
         return ParseResult::OK;
     }
 
-  
+	std::map< std::string, std::shared_ptr<Anim> >& Animations::GetAnims()
+	{
+		return m_anim;
+	}
 
 
 
@@ -378,6 +381,13 @@ namespace dfp
 
         return m_cell[m_currentCellIndex];
     }
+
+	std::vector< std::shared_ptr<Cell> >& Anim::GetCells()
+	{
+		return m_cell;
+	}
+
+	
 
 
 
