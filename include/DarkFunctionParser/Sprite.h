@@ -11,8 +11,10 @@
 #include "Commons.h"
 
 
-
-class TiXmlNode;
+namespace tinyxml2
+{
+	class XMLNode;
+};
 
 namespace dfp
 {
@@ -132,7 +134,7 @@ namespace dfp
         /** Parse text containing spr XML node.
         * @param dataNode is the xml node for <dir name="brown"> .
         * @return ParseResult::OK if everithing was fine, or an error code! */
-        ParseResult ParseXML(const TiXmlNode *dataNode);
+        ParseResult ParseXML(const tinyxml2::XMLNode *dataNode);
 
         /** This will return a shared pointer to a sprite (Spr) found at location
         * described by the xmlPath. For example if the sprite is file is:
@@ -206,7 +208,7 @@ namespace dfp
         /** Parse text containing spr XML node.
         * @param dataNode is the xml node for <spr name="0" x="5" y="7" w="17" h="24"/> .
         * @return ParseResult::OK if everithing was fine, or an error code! */
-        ParseResult ParseXML(const TiXmlNode *dataNode);
+        ParseResult ParseXML(const tinyxml2::XMLNode *dataNode);
 
         /** Get the text for latest error!
         * @return a string with a text that describe the error.*/

@@ -4,7 +4,7 @@
 #if defined(I3D_PLATFORM_S3E)
 #include "tinyxml.h"
 #else
-#include <tinyxml/tinyxml.h>
+#include <tinyxml2/tinyxml2.h>
 #endif
 
 //#include <cstdint>
@@ -163,24 +163,25 @@ namespace dfp
     ParseResult Animations::ParseText(const std::string &text)
     {
         // Create a tiny xml document and use it to parse the text.
-        TiXmlDocument doc;
+        tinyxml2::XMLDocument doc;
         doc.Parse(text.c_str());
 
         // Check for parsing errors.
         if (doc.Error())
         {
-            m_errorText = doc.ErrorDesc();
+			m_errorText = doc.GetErrorStr1();
+			m_errorText += doc.GetErrorStr2();
             return ParseResult::ERROR_PARSING_FAILED;
         }
 
-        TiXmlNode *imgNode = doc.FirstChild("animations");
+        tinyxml2::XMLElement *imgNode = doc.FirstChildElement("animations");
         if (!imgNode)
         {
             m_errorText = "Cannot find node <animations> !";
             return ParseResult::ERROR_MISSING_NODE;
         }
 
-        TiXmlElement* imgElem = imgNode->ToElement();
+        tinyxml2::XMLElement* imgElem = imgNode->ToElement();
 
         // Read the map attributes.
         m_spriteFileName = imgElem->Attribute("spriteSheet");
@@ -197,7 +198,7 @@ namespace dfp
             return ParseResult::ERROR_ANIMATIONS_VER_MISSING;
         }
 
-        const TiXmlNode *node = imgElem->FirstChild();
+        const tinyxml2::XMLNode *node = imgElem->FirstChild();
 
         if (!node)
         {
@@ -223,7 +224,7 @@ namespace dfp
                 }
             }
 
-            node = node->NextSibling();
+            node = node->NextSiblingElement();
         }
 
         return ParseResult::OK;
@@ -302,9 +303,9 @@ namespace dfp
 		return m_errorText; 
 	}
 
-    ParseResult Anim::ParseXML(const TiXmlNode *dataNode)
+    ParseResult Anim::ParseXML(const tinyxml2::XMLNode *dataNode)
     {
-        const TiXmlElement* nodeElm = dataNode->ToElement();
+        const tinyxml2::XMLElement* nodeElm = dataNode->ToElement();
 
         m_name = nodeElm->Attribute("name");
         if (m_name.empty())
@@ -313,13 +314,15 @@ namespace dfp
             return ParseResult::ERROR_NAME_WRONG;
         }
 
-        if (!nodeElm->Attribute("loops", (int*)&m_loops))
+		const char* tempValue = nodeElm->Attribute("loops");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'loops' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_loops = std::stoi(tempValue);
 
-        const TiXmlNode *node = dataNode->FirstChild();
+		const tinyxml2::XMLNode *node = dataNode->LastChild();
         while (node)
         {
             if (strcmp(node->Value(), "cell") == 0)
@@ -409,23 +412,28 @@ namespace dfp
 
     std::string Cell::GetErrorText(){ return m_errorText; }
 
-    ParseResult Cell::ParseXML(const TiXmlNode *dataNode)
+    ParseResult Cell::ParseXML(const tinyxml2::XMLNode *dataNode)
     {
-        const TiXmlElement* nodeElm = dataNode->ToElement();
+        const tinyxml2::XMLElement* nodeElm = dataNode->ToElement();
 
-        if (!nodeElm->Attribute("index", (int*)&m_index))
+		const char* tempValue = nodeElm->Attribute("index");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'index' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_index = std::stoi(tempValue);
 
-        if (!nodeElm->Attribute("delay", (int*)&m_delay))
+
+		tempValue = nodeElm->Attribute("delay");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'delay' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_delay = std::stoi(tempValue);
 
-        const TiXmlNode *node = dataNode->FirstChild();
+        const tinyxml2::XMLNode *node = dataNode->FirstChild();
         while (node)
         {
             if (strcmp(node->Value(), "spr") == 0)
@@ -476,9 +484,9 @@ namespace dfp
 
     std::string CellSpr::GetErrorText(){ return m_errorText; }
 
-    ParseResult CellSpr::ParseXML(const TiXmlNode *dataNode)
+    ParseResult CellSpr::ParseXML(const tinyxml2::XMLNode *dataNode)
     {
-        const TiXmlElement* nodeElm = dataNode->ToElement();
+        const tinyxml2::XMLElement* nodeElm = dataNode->ToElement();
 
         m_name = nodeElm->Attribute("name");
         if (m_name.empty())
@@ -487,23 +495,30 @@ namespace dfp
             return ParseResult::ERROR_NAME_WRONG;
         }
 
-        if (!nodeElm->Attribute("x", (int*)&m_x))
+
+		const char* tempValue = nodeElm->Attribute("x");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'x' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_x = std::stoi(tempValue);
 
-        if (!nodeElm->Attribute("y", (int*)&m_y))
+		tempValue = nodeElm->Attribute("y");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'y' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_y = std::stoi(tempValue);
 
-        if (!nodeElm->Attribute("z", (int*)&m_z))
+		tempValue = nodeElm->Attribute("z");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'z' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_z = std::stoi(tempValue);
 
         return ParseResult::OK;
     }

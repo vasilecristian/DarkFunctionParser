@@ -3,7 +3,7 @@
 #if defined(I3D_PLATFORM_S3E)
 #include "tinyxml.h"
 #else
-#include <tinyxml/tinyxml.h>
+#include <tinyxml2/tinyxml2.h>
 #endif
 
 
@@ -109,24 +109,25 @@ namespace dfp
     ParseResult Sprite::ParseText(const std::string &text)
     {
         // Create a tiny xml document and use it to parse the text.
-        TiXmlDocument doc;
+		tinyxml2::XMLDocument doc;
         doc.Parse(text.c_str());
 
         // Check for parsing errors.
         if (doc.Error())
         {            
-            m_errorText = doc.ErrorDesc();
+            m_errorText = doc.GetErrorStr1();
+			m_errorText += doc.GetErrorStr2();
             return ParseResult::ERROR_PARSING_FAILED;
         }
 
-        TiXmlNode *imgNode = doc.FirstChild("img");
+		tinyxml2::XMLNode *imgNode = doc.FirstChildElement("img");
         if (!imgNode)
         {
             m_errorText = "Cannot find node <img> !";
             return ParseResult::ERROR_MISSING_NODE;
         }
 
-        TiXmlElement* imgElem = imgNode->ToElement();
+		tinyxml2::XMLElement* imgElem = imgNode->ToElement();
 
         // Read the map attributes.
         m_imageFileName = imgElem->Attribute("name");
@@ -136,19 +137,23 @@ namespace dfp
             return ParseResult::ERROR_IMAGE_PATHNAME_WRONG;
         }
 
-        if (!imgElem->Attribute("w", (int*)&m_imageW))
+		const char* tempValue = imgElem->Attribute("w");
+        if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'w' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_imageW = std::stoi(tempValue);
 
-        if (!imgElem->Attribute("h", (int*)&m_imageH))
+		tempValue = imgElem->Attribute("h");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'h' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_imageH = std::stoi(tempValue);
 
-        const TiXmlNode *node = imgElem->FirstChild();
+        const tinyxml2::XMLNode *node = imgElem->FirstChild();
 
         if (!node)
         {
@@ -161,7 +166,7 @@ namespace dfp
             // Read the map properties.
             if (strcmp(node->Value(), "definitions") == 0)
             {
-                const TiXmlNode *subnode = node->FirstChild();
+                const tinyxml2::XMLNode *subnode = node->FirstChild();
                 while (subnode)
                 {
                     if (strcmp(subnode->Value(), "dir") == 0)
@@ -232,9 +237,9 @@ namespace dfp
 
     std::string Spr::GetErrorText(){ return m_errorText; }
 
-    ParseResult Spr::ParseXML(const TiXmlNode *dataNode)
+    ParseResult Spr::ParseXML(const tinyxml2::XMLNode *dataNode)
     {
-        const TiXmlElement* nodeElm = dataNode->ToElement();
+        const tinyxml2::XMLElement* nodeElm = dataNode->ToElement();
 
         m_name = nodeElm->Attribute("name");
         if (m_name.empty())
@@ -243,29 +248,37 @@ namespace dfp
             return ParseResult::ERROR_NAME_WRONG;
         }
 
-        if (!nodeElm->Attribute("x", &m_x))
+		const char* tempValue = nodeElm->Attribute("x");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'x' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_x = std::stoi(tempValue);
 
-        if(!nodeElm->Attribute("y", &m_y))
+		tempValue = nodeElm->Attribute("y");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'y' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_y = std::stoi(tempValue);
 
-        if(!nodeElm->Attribute("w", &m_w))
+		tempValue = nodeElm->Attribute("w");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'w' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_w = std::stoi(tempValue);
 
-        if(!nodeElm->Attribute("h", &m_h))
+		tempValue = nodeElm->Attribute("h");
+		if (!tempValue)
         {
             m_errorText = "Cannot find attribute 'h' or the value is not numeric!";
             return ParseResult::ERROR_NUMERIC_ATTRIBUTE_WRONG;
         }
+		m_h = std::stoi(tempValue);
 
         return ParseResult::OK;
     }
@@ -281,9 +294,9 @@ namespace dfp
 
     std::string Dir::GetErrorText(){ return m_errorText; }
 
-    ParseResult Dir::ParseXML(const TiXmlNode *dataNode)
+    ParseResult Dir::ParseXML(const tinyxml2::XMLNode *dataNode)
     {
-        const TiXmlElement* nodeElm = dataNode->ToElement();
+        const tinyxml2::XMLElement* nodeElm = dataNode->ToElement();
 
         m_name = nodeElm->Attribute("name");
         if (m_name.empty())
@@ -292,7 +305,7 @@ namespace dfp
             return ParseResult::ERROR_NAME_WRONG;
         }
 
-        const TiXmlNode *node = dataNode->FirstChild();
+        const tinyxml2::XMLNode *node = dataNode->FirstChild();
         while (node)
         {
             if (strcmp(node->Value(), "dir") == 0)

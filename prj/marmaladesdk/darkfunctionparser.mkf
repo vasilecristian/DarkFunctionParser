@@ -34,7 +34,7 @@ includepaths
 	
     ../../include
     ../../src
-    ../../../tinyxml/include
+    ../../../tinyxml2/include
 }
 
 librarypaths
@@ -45,9 +45,5 @@ librarypaths
 options
 {
 	
-}
-subprojects
-{
-    iw2dkitcore
 }
 

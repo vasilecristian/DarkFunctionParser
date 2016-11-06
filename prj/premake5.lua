@@ -1,4 +1,4 @@
-include "../../../../../premake/common/"
+include "../../premake/common/"
 
 
 -------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ project "DarkFunctionParser"
         "../include/",
         "../src/",
 		
-        "../../tinyxml/include",
+        "../../tinyxml2/include",
     }
     kind "StaticLib"
     targetdir("../lib/" .. GetPathFromPlatform())
