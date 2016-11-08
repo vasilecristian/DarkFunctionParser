@@ -85,6 +85,12 @@ namespace dfp
         * @return a shared pointer for a Sprite object.*/
 		std::shared_ptr<Spr> GetSpr(const std::string& xmlPath);
 
+		/**
+		* Use this to return all the Spr entiryes (aka <spr name="0" x="5" y="7" w="17" h="24"/>)
+		* This is a costly to call often!
+		* @return a vector of shared pointers.*/
+		std::vector<std::shared_ptr<Spr> > GetAllSpr();
+
     private:
 
         /** Is the text for latest error */
@@ -105,6 +111,8 @@ namespace dfp
 
         /** The object that contains in a tree format all the other <dir> notes from xml*/
         std::shared_ptr<Dir> m_root;
+
+		std::vector<std::shared_ptr<Spr> > GetAllSpr(std::shared_ptr<Dir> dir);
     };
 
 
@@ -119,6 +127,7 @@ namespace dfp
     class Dir
     {
         friend class Spr;
+		friend class Sprite;
     public:
 
         /** The constructor */

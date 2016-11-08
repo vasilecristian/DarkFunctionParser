@@ -322,7 +322,7 @@ namespace dfp
         }
 		m_loops = std::stoi(tempValue);
 
-		const tinyxml2::XMLNode *node = dataNode->LastChild();
+		const tinyxml2::XMLNode *node = dataNode->FirstChild();
         while (node)
         {
             if (strcmp(node->Value(), "cell") == 0)

@@ -215,7 +215,47 @@ namespace dfp
         return nullptr;
     }
 
+	std::vector<std::shared_ptr<Spr> > Sprite::GetAllSpr()
+	{
+		std::vector<std::shared_ptr<Spr> > results;
 
+		std::vector<std::shared_ptr<Spr> > r = GetAllSpr(m_root);
+		for (auto s : r)
+		{
+			results.push_back(s);
+		}
+
+		for (auto sitem : m_root->m_spr)
+		{
+			std::shared_ptr<Spr> s = sitem.second;
+			results.push_back(s);
+		}
+		
+		return results;
+	}
+
+	std::vector<std::shared_ptr<Spr> > Sprite::GetAllSpr(std::shared_ptr<Dir> dir)
+	{
+		std::vector<std::shared_ptr<Spr> > results;
+		for (auto ditem : dir->m_dir)
+		{
+			std::shared_ptr<Dir> d = ditem.second;
+
+			std::vector<std::shared_ptr<Spr> > r = GetAllSpr(d);
+			for (auto s : r)
+			{
+				results.push_back(s);
+			}
+
+			for (auto sitem : d->m_spr)
+			{
+				std::shared_ptr<Spr> s = sitem.second;
+				results.push_back(s);
+			}
+		}
+
+		return results;
+	}
     
 
 
