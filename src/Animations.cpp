@@ -476,11 +476,11 @@ namespace dfp
 
     std::string CellSpr::GetName(){ return m_name; }
 
-    unsigned int CellSpr::GetX(){ return m_x; }
+    int CellSpr::GetX(){ return m_x; }
 
-    unsigned int CellSpr::GetY(){ return m_y; }
+    int CellSpr::GetY(){ return m_y; }
 
-    unsigned int CellSpr::GetZ(){ return m_z; }
+    int CellSpr::GetZ(){ return m_z; }
 
     std::string CellSpr::GetErrorText(){ return m_errorText; }
 
